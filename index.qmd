@@ -1,0 +1,97 @@
+---
+title: "Gráficos de la Estación Meteorológica del CIGEFI"
+author: "Carlos Ávila"
+format: 
+  html:
+    toc: true
+    toc_float: false
+lang: es
+---
+
+
+# Introducción
+Este documento contiene gráficos estadísticos basados en los datos de la Estación Meteorológica Autómatica del Centro de Investigaciones en Goefísica de la Universidad de Costa Rica, correspondientes al 5 de abril de 2026.
+
+```{r}
+#| label: cargar-datos
+#| echo: false
+
+datos <- read.csv("estacion_cigefi.csv")
+```
+
+```{r}
+#| label: procesar-datos
+#| echo: false
+
+datos <- datos[, c("hora", "temperatura", "radiacion", "presion")]
+datos$periodo <- ifelse(datos$hora < 12, "mañana", "tarde")
+horas_frias <- datos[datos$temperatura <= 20, ]
+horas_calientes <- datos[datos$temperatura >= 24, ]
+datos <- datos[order(datos$hora), ]
+
+
+
+temperatura_x_periodo <- aggregate(
+  data = datos,
+  temperatura ~ periodo,
+  FUN = mean
+)
+
+radiacion_x_periodo <- aggregate(
+  data = datos,
+  radiacion ~ periodo,
+  FUN = mean
+)
+
+
+```
+
+# Promedio horario de temperatura (°C)
+
+```{r}
+#| label: grafico-temperatura-horas
+#| code-fold: true
+
+plot(
+  x = datos$hora,
+  y = datos$temperatura,
+  xlab = "Hora",
+  ylab = "Temperatura (°C)",
+  col = "red",
+  pch = 16
+)
+```
+
+# Relación entre radiación y temperatura
+
+```{r}
+#| label: grafico-radiacion-temperatura
+#| code-fold: true
+
+plot(
+  x = datos$radiacion,
+  y = datos$temperatura,
+  xlab = "Radiación (KW/m²)",
+  ylab = "Temperatura (°C)",
+  col = "orange",
+  pch = 16
+)
+```
+
+
+# Distribución de la presión atmosférica
+
+```{r}
+#| label: grafico-distribucion-presion
+#| code-fold: true
+
+hist(
+  x = datos$presion,
+  xlab = "Presión atmosférica (mb)",
+  ylab = "Frecuencia",
+  main = "",
+  col = "lightblue"
+)
+```
+
+
