@@ -10,7 +10,7 @@ lang: es
 
 
 # Introducción
-Este documento contiene gráficos estadísticos basados en los datos de la Estación Meteorológica Autómatica del Centro de Investigaciones en Goefísica de la Universidad de Costa Rica, correspondientes al 5 de abril de 2026.
+Este documento contiene gráficos estadísticos basados en los datos de la Estación Meteorológica Autómatica del Centro de Investigaciones en Geofísica de la Universidad de Costa Rica, correspondientes al 5 de abril de 2026.
 
 ```{r}
 #| label: cargar-datos
